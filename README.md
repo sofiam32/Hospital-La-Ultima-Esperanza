@@ -75,8 +75,8 @@ Ejecutar:
 
 
 ## 📦 Entregables
-Modelo E-R + tablas + dominios
-Consultas SQL (a–i)
-Triggers, funciones y procedimientos almacenados (j–n)
-Vista + usuario con permisos
+Modelo E-R + tablas + dominios  
+Consultas SQL (a–i)  
+Triggers, funciones y procedimientos almacenados (j–n)  
+Vista + usuario con permisos  
 Programas Java (CSV y XML)
