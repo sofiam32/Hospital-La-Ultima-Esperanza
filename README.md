@@ -53,7 +53,6 @@ Aplicaciones desarrolladas para:
 **3. Probar triggers, funciones y procedimientos**  
 &nbsp;&nbsp;&nbsp;&nbsp;source pruebas.sql;
 
-### ✅ Versión ligera con saltos de línea
 **4. Compilar y ejecutar los programas Java**  
 Compilar:  
 &nbsp;&nbsp;&nbsp;&nbsp;javac src/*.java  
