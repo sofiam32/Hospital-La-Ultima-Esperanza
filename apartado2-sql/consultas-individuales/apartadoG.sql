@@ -1,0 +1,4 @@
+-- Apartado G
+-- Obtener el personal de enfermería que siempre han estado asignadas a
+-- turnos en el mismo sitio (bloque y piso) y que, además, si han participado en 
+-- procedimientos médicos, siempre haya sido con el mismo doctor.

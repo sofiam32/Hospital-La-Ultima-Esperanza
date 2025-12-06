@@ -1,0 +1,5 @@
+-- Apartado E
+-- Obtener un listado detallado de los doctores del hospital, mostrando
+-- para cada uno su nombre, el número total de procedimientos realizados,
+-- el coste total de dichos procedimientos y el coste promedio por procedimiento.
+-- Los resultados deben estar ordenados de mayor a menor segun el número de procedimientos realizados.

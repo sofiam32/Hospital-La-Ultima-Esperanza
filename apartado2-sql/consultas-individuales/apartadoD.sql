@@ -1,0 +1,6 @@
+-- Apartado D
+-- Actualizar la descripción de los medicamentos agregando la nota de
+-- “Possible discontinuation” (posible descatalogación) a aquellos que
+-- no han sido recetados durante los últimos dos años por doctores
+-- pertenecientes al departamento de “General Medicine”, evitando
+-- además incluir aquellos que ya contengan dicha advertencia en su descripción actual.

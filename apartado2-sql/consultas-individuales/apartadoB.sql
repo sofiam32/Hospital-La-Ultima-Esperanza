@@ -1,0 +1,4 @@
+-- Apartado B
+-- Obtener los nombres de los doctores, los medicamentos y la fecha de prescripcion
+-- de los mismos de aquellos doctores que están afiliados al departamento de 
+-- “General Medicine” y que han recetado algun medicamento en el año 2023 o 2024.

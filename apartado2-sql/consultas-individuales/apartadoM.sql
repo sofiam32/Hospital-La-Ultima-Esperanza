@@ -1,0 +1,7 @@
+-- Apartado M
+-- Codifica una funcion almacenada denominada 'calc_stay_cost' que calcule y devuelva el
+-- coste total de una estancia pasada como parámetro. Para determinar dicho coste, considera 
+-- que las habitaciones de tipo ICU tienen un coste de 500e/día, las Single de 300e/día, las
+-- Double de 150e/día y otros tipos de habitaciones tienen un coste de 100e/día. Para determinar
+-- la duración de una estancia busca información a cerca de las funciones 'DATEDIFF' y 'STR_TO_DATE'. 
+-- Incluye tambien todas las sentencias SQL necesarias para probar la función almacenada.

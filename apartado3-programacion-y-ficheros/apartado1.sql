@@ -1,0 +1,4 @@
+-- Apartado 1
+-- Diseña una vista que permita consultar los medicamentos prescritos. La vista debe incluir el código,
+-- nombre y marca del medicamento, el nombre del paciente al que se le realizo la prescripción,
+-- la fecha de dicha prescripción y el nombre del doctor responsable.

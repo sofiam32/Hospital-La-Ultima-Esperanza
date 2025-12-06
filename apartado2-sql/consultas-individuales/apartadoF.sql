@@ -1,0 +1,4 @@
+-- Apartado F
+-- Obtener los doctores (nombre y posicion) que han realizado todos los
+-- procedimientos médicos con coste superior a 5000 y que haya realizado
+-- más de 3 procedimientos médicos de cualquiera de los tipos en total.

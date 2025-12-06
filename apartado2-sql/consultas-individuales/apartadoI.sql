@@ -1,0 +1,3 @@
+-- Apartado I
+-- Obtener el nombre de los medicamentos que han sido prescritos por
+-- todos los doctores pertenecientes a mas de un departamento diferente. 

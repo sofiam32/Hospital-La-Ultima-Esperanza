@@ -1,0 +1,2 @@
+-- Apartado 2
+-- Añade un usuario a la base de datos y dale permiso de lectura sobre la vista anteriormente creada. 

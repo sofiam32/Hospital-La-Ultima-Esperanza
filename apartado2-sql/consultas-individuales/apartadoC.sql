@@ -1,0 +1,5 @@
+-- Apartado C
+-- Obtener el nombre del paciente con el ingreso más largo y el paciente con
+-- el ingreso más corto en el hospital, mostrando para cada uno su nombre, el
+-- número de habitación donde estuvo ingresado, así como el piso y bloque de la misma, la
+-- duración de la estancia en días y el tipo de estancia (mas largo o más corto).

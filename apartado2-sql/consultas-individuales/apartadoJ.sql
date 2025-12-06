@@ -1,0 +1,8 @@
+-- Apartado J
+-- Codifica un trigger que garantice que unicamente los doctores con la formación adecuada y 
+-- actualizada puedan programar nuevas intervenciones medicas para las que se han certificado.
+-- Es decir, que el certificado sea válido para la fecha del procedimiento que va a realizar.
+-- Diferenciar mediante mensajes de error específicos entre ambos casos: los que el doctor no
+-- posee la certificacion requerida y aquellos en los que la certificación existe pero se encuentra
+-- caducada. Incluir las sentencias SQL para probar el trigger con todos los casos (i.e. que se
+-- se pueda dar de alta correctamente y ambos errores).

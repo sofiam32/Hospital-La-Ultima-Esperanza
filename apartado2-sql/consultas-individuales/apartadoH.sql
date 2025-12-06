@@ -1,0 +1,7 @@
+-- Apartado H
+-- Obtener para cada medicamento (código y nombre) el número total de veces
+-- que ha sido prescrito, el nombre del doctor que mas lo ha recetado (si existen
+-- empates mostrar todos los doctores empatados), y la dosis promedio recetada. Ordenar los
+-- resultados de mayor a menor segun el número total de prescripciones. Tener en cuenta que
+-- si existen empates entre los doctores se tienen que mostrar todos los doctores, cada uno en
+-- una fila distinta.
