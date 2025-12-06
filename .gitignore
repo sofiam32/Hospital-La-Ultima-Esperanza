@@ -1,0 +1,69 @@
+# ================================
+#   ARCHIVOS DEL ENTORNO LOCAL
+# ================================
+
+# Configuración personal de VS Code
+.vscode/
+.vscode/*
+
+# Archivos de SQLTools
+sqltools*
+
+# Archivos temporales de editores
+*.swp
+*.swo
+*~
+.*.swp
+
+# ================================
+#   SISTEMA / SO
+# ================================
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Linux user stuff
+.cache/
+
+# ================================
+#   COMPILACIÓN JAVA
+# ================================
+# Compilación
+*.class
+*.jar
+*.war
+*.ear
+
+# Logs
+*.log
+
+# Archivos generados por el compilador
+bin/
+out/
+target/
+
+# ================================
+#   ARCHIVOS DEL PROYECTO
+# ================================
+# CSV y XML generados por tu programa
+*.csv
+*.xml
+
+# Si quieres guardar ejemplos, crea carpeta /ejemplos_salida/
+# y elimínala de esta sección.
+
+# ================================
+#   BACKUPS Y TEMPORAL
+# ================================
+*.tmp
+*.temp
+*.bak
+*.old
+
+# Archivos de compresión
+*.zip
+*.rar
+*.7z
