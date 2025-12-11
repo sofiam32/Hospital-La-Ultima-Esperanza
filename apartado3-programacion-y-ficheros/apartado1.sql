@@ -8,6 +8,7 @@ CREATE OR REPLACE VIEW hospital_management_system.medication_prescribed AS
         SELECT pr.medicationid AS med_code,
                m.name AS med_name,
                m.brand AS med_brand,
+               pa.ssn AS patient_ssn,
                pa.name AS patient_name,
                pr.date AS prescription_date,
                ph.name AS physician_name 
