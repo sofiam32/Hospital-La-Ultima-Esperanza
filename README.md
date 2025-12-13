@@ -19,8 +19,9 @@ El objetivo del proyecto es implementar un sistema capaz de:
 **1. Modelado (Entidad–Relación)**
 - Diseño conceptual en notación Chen.
 - Identificación de entidades, atributos, relaciones, cardinalidades y restricciones.
+- Memoria sobre las decisiones de diseño.
 - Documento de semántica no contemplada.
-- Transformación al modelo lógico y diseño de las tablas.
+- Diseño del paso a tablas.
 
 **2. SQL**
 Incluye todo lo solicitado en el enunciado:
@@ -35,8 +36,8 @@ Incluye todo lo solicitado en el enunciado:
 
 **3. Programación en Java**
 Aplicaciones desarrolladas para:
-- Acceder a la base de datos mediante JDBC.
-- Consultar la vista de medicamentos prescritos.
+- Diseño de una vista de de medicamentos prescritos.
+- Creación de un usuario a la base de datos.
 - Exportar la información filtrada por paciente a:
     - CSV
     - XML
@@ -74,7 +75,7 @@ Ejecutar:
 
 
 ## 📦 Entregables
-Modelo E-R + tablas + dominios  
+Modelo E-R + Semántica no contemplada + tablas + dominios  
 Consultas SQL (a–i)  
 Triggers, funciones y procedimientos almacenados (j–n)  
 Vista + usuario con permisos  
