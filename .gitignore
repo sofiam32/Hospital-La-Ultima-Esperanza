@@ -33,7 +33,6 @@ desktop.ini
 # ================================
 # Compilación
 *.class
-*.jar
 *.war
 *.ear
 
@@ -44,13 +43,6 @@ desktop.ini
 bin/
 out/
 target/
-
-# ================================
-#   ARCHIVOS DEL PROYECTO
-# ================================
-# CSV y XML generados por tu programa
-*.csv
-*.xml
 
 # Si quieres guardar ejemplos, crea carpeta /ejemplos_salida/
 # y elimínala de esta sección.
