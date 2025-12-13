@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<prescripciones>
+    <prescripcion>
+        <codigo>8</codigo>
+        <nombre>NeuroCalm</nombre>
+        <marca>Inter Labs</marca>
+        <ssn>100000004</ssn>
+        <paciente>Dennis Doe</paciente>
+        <fecha>18/01/2024</fecha>
+        <medico>John Wen</medico>
+    </prescripcion>
+    <prescripcion>
+        <codigo>4</codigo>
+        <nombre>Crescavitin</nombre>
+        <marca>Baz Industries</marca>
+        <ssn>100000004</ssn>
+        <paciente>Dennis Doe</paciente>
+        <fecha>05/04/2024</fecha>
+        <medico>Keith Dudemeister</medico>
+    </prescripcion>
+    <prescripcion>
+        <codigo>2</codigo>
+        <nombre>Thesisin</nombre>
+        <marca>Foo Labs</marca>
+        <ssn>100000004</ssn>
+        <paciente>Dennis Doe</paciente>
+        <fecha>30/4/2008</fecha>
+        <medico>Molly Clock</medico>
+    </prescripcion>
+    <prescripcion>
+        <codigo>2</codigo>
+        <nombre>Thesisin</nombre>
+        <marca>Foo Labs</marca>
+        <ssn>100000004</ssn>
+        <paciente>Dennis Doe</paciente>
+        <fecha>27/4/2008</fecha>
+        <medico>Molly Clock</medico>
+    </prescripcion>
+</prescripciones>
