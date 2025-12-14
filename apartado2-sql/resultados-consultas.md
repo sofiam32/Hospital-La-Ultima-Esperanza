@@ -1,22 +1,53 @@
--- Apartado A
+# Apartado 2: SQL
 
+Una vez diseñada la base de datos para gestión de datos hospitalarios, se desea automatizar algunas consultas, verificaciones sobre los datos y funciones/procedimientos. Para ello nos vamos a centrar en algunas tablas específicas de la base de datos, cuya creación y carga de datos se deben realizar a través de la ejecución de los ficheros `.sql` que se indican a continuación. Se pide:
+
+---
+
+## Apartado A
+
+Usando los ficheros hospital_tables.sql y hospital_data.sql disponibles en Moodle, crear la base de datos hospital management system y cargar todos los datos disponibles que van a ser objeto de procesos en puntos posteriores.
+
+### 💻 Código SQL
+
+```sql
 DROP DATABASE IF EXISTS hospital_management_system;
 
 SOURCE ./preset-data-creation/hospital_tables.sql;
 USE hospital_management_system;
 SOURCE ./preset-data-creation/hospital_data.sql;
+```
 
--- Apartado B
+---
 
+## Apartado B
+
+Obtener los nombres de los doctores, los medicamentos y la fecha de prescripcion de los mismos de aquellos doctores que están afiliados al departamento de  “General Medicine” y que han recetado algun medicamento en el año 2023 o 2024.
+
+### 💻 Código SQL
+
+```sql
 SELECT physician.name, medication.name, prescribes.date
 FROM physician JOIN prescribes ON physician.employeeid = prescribes.physicianid
 JOIN medication	ON prescribes.medicationid = medication.code
 JOIN affiliated_with ON physician.employeeid = affiliated_with.physicianid
 JOIN department ON affiliated_with.departmentid = department.departmentid
 WHERE department.name = 'General Medicine' AND (prescribes.date LIKE '%2023' OR prescribes.date LIKE '%2024');
+```
 
--- Apartado C
+### 🖼️ Resultado de la Ejecución
 
+![Apartado B](./img-resultados/apartadoB.png)
+
+---
+
+## Apartado C
+
+Obtener el nombre del paciente con el ingreso más largo y el paciente con el ingreso más corto en el hospital, mostrando para cada uno su nombre, el número de habitación donde estuvo ingresado, así como el piso y bloque de la misma, la duración de la estancia en días y el tipo de estancia (mas largo o más corto).
+
+### 💻 Código SQL
+
+```sql
 (
 	SELECT 
 		p.name AS Pacient_Name, 
@@ -64,9 +95,21 @@ UNION ALL
         )
     LIMIT 1
 );
+```
 
--- Apartado D
+### 🖼️ Resultado de la Ejecución
 
+![Apartado C](./img-resultados/apartadoC.png)
+
+--
+
+## Apartado D
+
+Actualizar la descripción de los medicamentos agregando la nota de “Possible discontinuation” (posible descatalogación) a aquellos que no han sido recetados durante los últimos dos años por doctores pertenecientes al departamento de “General Medicine”, evitando además incluir aquellos que ya contengan dicha advertencia en su descripción actual.
+
+### 💻 Código SQL
+
+```sql
 UPDATE medication m
 SET m.description = CONCAT(
     IFNULL(m.description, ''),
@@ -88,9 +131,21 @@ AND (m.description IS NULL OR m.description NOT LIKE '%Possible discontinuation%
 
 -- Prueba
 SELECT * FROM medication;
+```
 
--- Apartado E
+### 🖼️ Resultado de la Ejecución
 
+![Apartado D](./img-resultados/apartadoD.png)
+
+---
+
+## Apartado E
+
+Obtener un listado detallado de los doctores del hospital, mostrando para cada uno su nombre, el número total de procedimientos realizados, el coste total de dichos procedimientos y el coste promedio por procedimiento. Los resultados deben estar ordenados de mayor a menor segun el número de procedimientos realizados.
+
+### 💻 Código SQL
+
+```sql
 SELECT p.name AS NAME_PHYSICIAN, ab.NUM_P, ab.T_COSTE, ab.MED_C
 FROM physician p JOIN (SELECT physicianid, COUNT(*) AS NUM_P, SUM(cost) AS T_COSTE, AVG(cost) AS MED_C
             						FROM (SELECT p.code, p.cost , u.physicianid  
@@ -98,9 +153,21 @@ FROM physician p JOIN (SELECT physicianid, COUNT(*) AS NUM_P, SUM(cost) AS T_COS
             						GROUP BY physicianid  
             						)ab ON p.employeeid = ab.physicianid 
             						ORDER BY ab.NUM_P DESC;
+```
 
--- Apartado F
+### 🖼️ Resultado de la Ejecución
 
+![Apartado E](./img-resultados/apartadoE.png)
+
+---
+
+## Apartado F
+
+Obtener los doctores (nombre y posicion) que han realizado todos los procedimientos médicos con coste superior a 5000 y que haya realizado más de 3 procedimientos médicos de cualquiera de los tipos en total.
+
+### 💻 Código SQL
+
+```sql
 SELECT p.name, p.position FROM physician p
 WHERE
     NOT EXISTS (
@@ -115,9 +182,21 @@ WHERE
         GROUP BY u2.physicianid
         HAVING COUNT(*) > 3
     );
+```
 
--- Apartado G
+### 🖼️ Resultado de la Ejecución
 
+![Apartado F](./img-resultados/apartadoF.png)
+
+---
+
+## Apartado G
+
+Obtener el personal de enfermería que siempre han estado asignadas a turnos en el mismo sitio (bloque y piso) y que, además, si han participado en procedimientos médicos, siempre haya sido con el mismo doctor.
+
+### 💻 Código SQL
+
+```sql
 SELECT n.employeeid,
        n.name,
        oc.blockfloorid,
@@ -146,9 +225,21 @@ WHERE
    u.assistingnurseid IS NULL
    OR u.num_docs = 1
 ORDER BY n.employeeid;
+```
 
--- Apartado H
+### 🖼️ Resultado de la Ejecución
 
+![Apartado G](./img-resultados/apartadoG.png)
+
+---
+
+## Apartado H
+
+Obtener para cada medicamento (código y nombre) el número total de veces que ha sido prescrito, el nombre del doctor que mas lo ha recetado (si existen empates mostrar todos los doctores empatados), y la dosis promedio recetada. Ordenar los resultados de mayor a menor segun el número total de prescripciones. Tener en cuenta que si existen empates entre los doctores se tienen que mostrar todos los doctores, cada uno en una fila distinta.
+
+### 💻 Código SQL
+
+```sql
 SELECT 
     m.code AS codigo_medicamento,
     m.name AS nombre_medicamento,
@@ -181,9 +272,21 @@ JOIN physician p ON p.employeeid IN (
     HAVING COUNT(*) = t1.max_frecuencia_doctor
 )
 ORDER BY t1.total_prescripciones DESC;
+```
 
--- Apartado I
+### 🖼️ Resultado de la Ejecución
 
+![Apartado H](./img-resultados/apartadoH.png)
+
+---
+
+## Apartado I
+
+Obtener el nombre de los medicamentos que han sido prescritos por todos los doctores pertenecientes a más de un departamento diferente. 
+
+### 💻 Código SQL
+
+```sql
 SELECT m.name
 FROM medication m
 WHERE m.code IN (
@@ -206,9 +309,21 @@ WHERE m.code IN (
         ) AS T
     )
 );
+```
 
--- Apartado J
+### 🖼️ Resultado de la Ejecución
 
+![Apartado I](./img-resultados/apartadoI.png)
+
+---
+
+## Apartado J
+
+Codifica un trigger que garantice que unicamente los doctores con la formación adecuada y  actualizada puedan programar nuevas intervenciones medicas para las que se han certificado. Es decir, que el certificado sea válido para la fecha del procedimiento que va a realizar. Diferenciar mediante mensajes de error específicos entre ambos casos: los que el doctor no posee la certificacion requerida y aquellos en los que la certificación existe pero se encuentra caducada. Incluir las sentencias SQL para probar el trigger con todos los casos (i.e. que se pueda dar de alta correctamente y ambos errores).
+
+### 💻 Código SQL
+
+```sql
 DELIMITER //
 CREATE TRIGGER verificar_certificacion_intervencion 
 BEFORE INSERT ON undergoes
@@ -260,9 +375,25 @@ WHERE
     AND procedureid = 1
     AND stayid = 3215
     AND `date` = '31/12/2008';
+```
 
--- Apartado K
+### 🖼️ Resultado de la Ejecución
 
+![Apartado J](./img-resultados/apartadoJ.png)
+
+---
+
+## Apartado K
+
+Con el diseno actual de la base de datos, la política de gestion de borrados de pacientes no permite llevar a cabo el borrado de aquellos pacientes que tengan asociado cualquier tipo de información médica sobre ellos. Sin embargo, se desea cambiar esta política de manera que se permita eliminar pacientes bajo condiciones controladas: no tener citas o procedimientos médicos futuros programados y no tener registrado en la base de datos ningún tipo de información de actividad médica (consultas, procedimientos, prescriciones o estancias) durante los últimos 3 años.
+
+Para poder realizar esta gestión, primeramente generar las sentencias SQL necesarias para permitir el borrado de pacientes de la base de datos aunque tengan asociados datos (se borrarán los datos del resto de tablas que tengan asociados).
+
+Posteriormente, codificar un trigger que impida la eliminacion de pacientes que no cumplan  con las condiciones controladas indicadas anteriormente. Dicho trigger debera proporcionar mensajes de error diferenciados para cada una de las situaciones de error que puedan ocurrir. Incluir tambien todas las sentencias SQL necesarias para probar el trigger en todos los casos (i.e. que se se pueda realizar el borrado correctamente así como los diferentes errores).
+
+### 💻 Código SQL
+
+```sql
 ALTER TABLE appointments
   ADD CONSTRAINT fk_appointments_patient
   FOREIGN KEY (patientid) REFERENCES patient(ssn)
@@ -507,9 +638,25 @@ VALUES (
 
 DELETE FROM patient WHERE ssn = 400000007;
 -- Esperado: ERROR 6
+```
 
--- Apartado L
+### 🖼️ Resultado de la Ejecución
 
+![Apartado K1](./img-resultados/apartadoK1.png)
+![Apartado K2](./img-resultados/apartadoK2.png)
+![Apartado K3](./img-resultados/apartadoK3.png)
+
+---
+
+## Apartado L
+
+Codifica una funcion almacenada denominada 'total_cost_patient' que calcule y devuelva el coste total acumulado de todos los procedimientos medicos registrados en la tabla 'undergoes' que un paciente, pasado como parámetro, haya recibido. Infiere los tipos de datos tanto del coste total como del identificador del paciente a partir de los datos con los que las tablas fueron creadas.
+
+Tras crear la funcion almacenada 'total_cost_patient', realiza una consulta en SQL que, haciendo uso de la función, liste los datos del paciente que mayor coste total acumulado en procedimientos medicos.
+
+### 💻 Código SQL
+
+```sql
 DELIMITER $$
 CREATE FUNCTION total_cost_patient(patient_SSN INT)
 RETURNS INT
@@ -531,9 +678,21 @@ SELECT
 FROM patient p
 ORDER BY total_cost_patient(p.ssn) DESC
 LIMIT 1;
+```
 
--- Apartado M
+### 🖼️ Resultado de la Ejecución
 
+![Apartado L](./img-resultados/apartadoL.png)
+
+---
+
+## Apartado M
+
+Codifica una funcion almacenada denominada 'calc_stay_cost' que calcule y devuelva el coste total de una estancia pasada como parámetro. Para determinar dicho coste, considera que las habitaciones de tipo ICU tienen un coste de 500e/día, las Single de 300e/día, las Double de 150e/día y otros tipos de habitaciones tienen un coste de 100e/día. Para determinar la duración de una estancia busca información a cerca de las funciones 'DATEDIFF' y 'STR_TO_DATE'.  Incluye tambien todas las sentencias SQL necesarias para probar la función almacenada.
+
+### 💻 Código SQL
+
+```sql
 DELIMITER $$
 CREATE FUNCTION calc_stay_cost(stayid INT)
 RETURNS INT
@@ -567,10 +726,34 @@ DELIMITER ;
 
 -- Prueba
 SELECT calc_stay_cost(3215) AS total_cost;
+```
+
+### 🖼️ Resultado de la Ejecución
+
+![Apartado M](./img-resultados/apartadoM.png)
+
+---
+
+## Apartado N
+
+Codifica un procedimiento almacenado denominado 'physician_report' que permita generar un reporte de texto con los pacientes atendidos por un doctor y las medicinas que les han prescrito. El procedimiento recibirá como entrada el identificador del doctor y el rango de fechas sobre las que se desea generar el informe. Se dispondra de un parámetro de salida de tipo TEXT que contendra el un informe como el que se muestra a continuación:
+
+   INFORME DE John Dorian
+
+   John Smith (24/4/2008)
 
 
--- Apartado N
+   \# Procrastin-X
 
+   John Smith (25/4/2008)
+
+   \# No medications prescribed
+
+La primera línea indicara el nombre del doctor. En las lineas sucesivas se indicará el nombre del paciente atendido y la fecha en la que atendio así como los nombres de los medicamentos prescritos en la consulta. Si no se recetó ningún medicamento se indicará "No medications prescribed". Las consultas deberan ordenarse cronológicamente. Incluye también todas las sentencias SQL necesarias para probar el procedimiento almacenado.
+
+### 💻 Código SQL
+
+```sql
 DELIMITER $$
 CREATE PROCEDURE physician_report (IN doctorid INT, IN startdate VARCHAR(10), IN enddate VARCHAR(10), OUT result TEXT)
 BEGIN
@@ -653,3 +836,12 @@ SELECT @result AS INFORME;
 -- Prueba 5: Doctor no existente
 CALL physician_report(-1, '27/4/2008', '30/4/2008', @result);
 SELECT @result AS INFORME;
+```
+
+### 🖼️ Resultado de la Ejecución
+
+![Apartado N1](./img-resultados/apartadoN1.png)
+![Apartado N2](./img-resultados/apartadoN2.png)
+![Apartado N3](./img-resultados/apartadoN3.png)
+![Apartado N4](./img-resultados/apartadoN4.png)
+![Apartado N5](./img-resultados/apartadoN5.png)
