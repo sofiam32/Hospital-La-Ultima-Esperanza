@@ -4,3 +4,21 @@
 -- no han sido recetados durante los últimos dos años por doctores
 -- pertenecientes al departamento de “General Medicine”, evitando
 -- además incluir aquellos que ya contengan dicha advertencia en su descripción actual.
+UPDATE medication m
+SET m.description = CONCAT(IFNULL(m.description, ''), 
+                           CASE 
+                             WHEN m.description IS NULL OR m.description = '' 
+                             THEN 'Possible discontinuation'
+                             ELSE ' - Possible discontinuation'
+                           END)
+WHERE m.code NOT IN (
+    SELECT DISTINCT pr.medicationid
+    FROM prescribes pr
+    INNER JOIN physician ph ON pr.physicianid = ph.employeeid
+    INNER JOIN affiliated_with aw ON ph.employeeid = aw.physicianid
+    INNER JOIN department d ON aw.departmentid = d.departmentid
+    WHERE d.name = 'General Medicine'
+      AND pr.`date` >= DATE_SUB(CURDATE(), INTERVAL 2 YEAR)
+)
+AND (m.description IS NULL 
+     OR m.description NOT LIKE '%Possible discontinuation%');
