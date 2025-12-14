@@ -8,7 +8,7 @@
 
 Delimiter $$
 create function calc_stay_cost(stayid int)
-returns double
+returns int
 Deterministic
 begin
 	-- Declaro las variables locales.
@@ -18,8 +18,8 @@ begin
 	declare start_date date;
 	declare end_date date;
 	declare stay_time int;
-	declare actual double;
-	declare total double;
+	declare actual int;
+	declare total int;
 
 	-- Selecciono en que variables voy a guardar los datos
 	select stay.start_time, stay.end_time, room.roomtype
@@ -30,7 +30,7 @@ begin
 	-- Paso de string a date las fechas y cálculo los días de estancia.
 	set start_date = STR_TO_DATE(start_time, '%d/%m/%Y');
 	set end_date = STR_TO_DATE(end_time, '%d/%m/%Y');
-	set stay_time = datediff(end_date, start_date);
+	set stay_time = datediff(end_date, start_date) + 1;
 
 	-- En función del tipo de habitación tiene un precio diferente.
 	set actual = case room_type
@@ -46,5 +46,5 @@ begin
 end $$
 Delimiter ;
 
- -- Caso para probar.
-SELECT calc_stay_cost(3215) AS total_cost;
+-- Caso de prueba cuyo resultado es 600 ya que tiene 2 días de estancia.
+SELECT calc_stay_cost(3217) AS total_cost;
