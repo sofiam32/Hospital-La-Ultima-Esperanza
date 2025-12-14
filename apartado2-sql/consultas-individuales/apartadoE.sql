@@ -9,5 +9,5 @@ FROM physician p JOIN (SELECT physicianid, COUNT(*) AS NUM_P, SUM(cost) AS T_COS
             						FROM (SELECT p.code, p.cost , u.physicianid  
             								  FROM undergoes u JOIN medical_procedure p ON u.procedureid = p.code)a
             						GROUP BY physicianid  
-            						ORDER BY NUM_P DESC
-            						)ab ON p.employeeid = ab.physicianid
+            						) ab ON p.employeeid = ab.physicianid
+									ORDER BY ab.NUM_P DESC;

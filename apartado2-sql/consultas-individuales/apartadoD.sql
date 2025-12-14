@@ -4,6 +4,7 @@
 -- no han sido recetados durante los últimos dos años por doctores
 -- pertenecientes al departamento de “General Medicine”, evitando
 -- además incluir aquellos que ya contengan dicha advertencia en su descripción actual.
+
 UPDATE medication m
 SET m.description = CONCAT(
     IFNULL(m.description, ''),
@@ -22,3 +23,5 @@ WHERE m.code NOT IN (
       AND STR_TO_DATE(pr.`date`, '%d/%m/%Y') >= DATE_SUB(CURDATE(), INTERVAL 2 YEAR)
 )
 AND (m.description IS NULL OR m.description NOT LIKE '%Possible discontinuation%');
+
+SELECT * FROM medication;

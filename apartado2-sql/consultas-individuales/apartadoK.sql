@@ -170,10 +170,13 @@ VALUES (
   DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 5 DAY), '%e/%c/%Y')
 );
 
+INSERT INTO trained_in (physicianid, treatmentid, certificationdate, certificationexpires)
+VALUES (1, 1, '01/10/2025', '01/10/2026');
+
 INSERT INTO undergoes (patientid, procedureid, stayid, `date`, physicianid, assistingnurseid)
 VALUES (
   400000003, 1, 94000003,
-  DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 20 DAY), '%e/%c/%Y'),
+  DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 30 DAY), '%e/%c/%Y'),
   1, 101
 );
 

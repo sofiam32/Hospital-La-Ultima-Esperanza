@@ -6,7 +6,6 @@
 -- fueron creadas.
 
 DELIMITER $$
-
 CREATE FUNCTION total_cost_patient(patient_SSN INT)
 RETURNS INT
 DETERMINISTIC
@@ -21,7 +20,6 @@ BEGIN
 	WHERE u.patientid = patient_ssn;
     RETURN total_cost;
 END$$
-
 DELIMITER ;
 
 -- Tras crear la funcion almacenada 'total_cost_patient', realiza una consulta en SQL que,
@@ -33,4 +31,3 @@ SELECT
 FROM patient p
 ORDER BY total_cost_patient(p.ssn) DESC
 LIMIT 1;
-

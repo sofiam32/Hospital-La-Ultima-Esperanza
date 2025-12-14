@@ -5,7 +5,7 @@
 -- fechas sobre las que se desea generar el informe. Se dispondra de un parámetro de salida
 -- de tipo TEXT que contendra el un informe como el que se muestra a continuación:
 
--- INFORMEDE John Dorian
+-- INFORME DE John Dorian
 
 -- John Smith (24/4/2008)
 -- # Procrastin-X
