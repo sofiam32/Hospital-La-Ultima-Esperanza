@@ -154,14 +154,15 @@ DELIMITER ;
 
 -- TEST 1: OK -> Paciente sin actividad ni futuro (DEBE BORRAR)
 INSERT INTO patient (ssn, name, address, phonenum, insuranceid, pcpid)
-VALUES (400000001, 'TEST_OK_SIN_ACTIVIDAD', 'Calle 1', '600-000-001', 94000001, 1);
+VALUES (400000001, 'TEST_1', 'Calle 1', '600-000-001', 94000001, 1);
 
 DELETE FROM patient WHERE ssn = 400000001;
 -- Esperado: OK
 
 -- TEST 2: ERROR -> Tiene CITA FUTURA (appointments)
+DELETE FROM patient WHERE ssn = 400000002;
 INSERT INTO patient (ssn, name, address, phonenum, insuranceid, pcpid)
-VALUES (400000002, 'TEST_ERR_CITA_FUTURA', 'Calle 2', '600-000-002', 94000002, 1);
+VALUES (400000002, 'TEST_2', 'Calle 2', '600-000-002', 94000002, 1);
 
 INSERT INTO appointments (appointmentid, patientid, prepnurseid, physicianid, start_dt_time, end_dt_time, examinationroom)
 VALUES (
@@ -176,10 +177,10 @@ DELETE FROM patient WHERE ssn = 400000002;
 
 
 -- TEST 3: ERROR -> Tiene PROCEDIMIENTO FUTURO (undergoes)
+DELETE FROM patient WHERE ssn = 400000003;
 INSERT INTO patient (ssn, name, address, phonenum, insuranceid, pcpid)
-VALUES (400000003, 'TEST_ERR_PROC_FUTURO', 'Calle 3', '600-000-003', 94000003, 1);
+VALUES (400000003, 'TEST_3', 'Calle 3', '600-000-003', 94000003, 1);
 
--- necesita un stay para cumplir FK de undergoes
 INSERT INTO stay (stayid, patientid, roomid, start_time, end_time)
 VALUES (
   94000003, 400000003, 101,
@@ -199,8 +200,9 @@ DELETE FROM patient WHERE ssn = 400000003;
 
 
 -- TEST 4: ERROR -> Tiene ESTANCIA FUTURA (stay)
+DELETE FROM patient WHERE ssn = 400000004;
 INSERT INTO patient (ssn, name, address, phonenum, insuranceid, pcpid)
-VALUES (400000004, 'TEST_ERR_ESTANCIA_FUTURA', 'Calle 4', '600-000-004', 94000004, 1);
+VALUES (400000004, 'TEST_4', 'Calle 4', '600-000-004', 94000004, 1);
 
 INSERT INTO stay (stayid, patientid, roomid, start_time, end_time)
 VALUES (
@@ -214,8 +216,9 @@ DELETE FROM patient WHERE ssn = 400000004;
 
 
 -- TEST 5: ERROR -> Actividad en últimos 3 años (CITA RECIENTE)
+DELETE FROM patient WHERE ssn = 400000005;
 INSERT INTO patient (ssn, name, address, phonenum, insuranceid, pcpid)
-VALUES (400000005, 'TEST_ERR_CITA_RECIENTE', 'Calle 5', '600-000-005', 94000005, 1);
+VALUES (400000005, 'TEST_5', 'Calle 5', '600-000-005', 94000005, 1);
 
 INSERT INTO appointments (appointmentid, patientid, prepnurseid, physicianid, start_dt_time, end_dt_time, examinationroom)
 VALUES (
@@ -230,8 +233,9 @@ DELETE FROM patient WHERE ssn = 400000005;
 
 
 -- TEST 6: ERROR -> Actividad en últimos 3 años (PRESCRIPCIÓN RECIENTE)
+DELETE FROM patient WHERE ssn = 400000006;
 INSERT INTO patient (ssn, name, address, phonenum, insuranceid, pcpid)
-VALUES (400000006, 'TEST_ERR_PRESC_RECIENTE', 'Calle 6', '600-000-006', 94000006, 1);
+VALUES (400000006, 'TEST_6', 'Calle 6', '600-000-006', 94000006, 1);
 
 -- necesitas una cita porque prescribes tiene FK a appointments
 INSERT INTO appointments (appointmentid, patientid, prepnurseid, physicianid, start_dt_time, end_dt_time, examinationroom)
@@ -253,42 +257,31 @@ DELETE FROM patient WHERE ssn = 400000006;
 -- Esperado: ERROR ... actividad de prescripciones en los últimos 3 años ...
 
 
+
 -- TEST 7: OK -> Actividad antigua (>3 años) y sin futuro (DEBE BORRAR)
+DELETE FROM patient WHERE ssn = 400000007;
 INSERT INTO patient (ssn, name, address, phonenum, insuranceid, pcpid)
-VALUES (400000007, 'TEST_OK_ACTIVIDAD_ANTIGUA', 'Calle 7', '600-000-007', 94000007, 1);
+VALUES (400000007, 'TEST_7', 'Calle 7', '600-000-007', 94000007, 1);
 
--- Cita antigua (hace 5 años)
 INSERT INTO appointments (appointmentid, patientid, prepnurseid, physicianid, start_dt_time, end_dt_time, examinationroom)
-VALUES (
-  94000007, 400000007, 101, 1,
-  DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 YEAR), '%e/%c/%Y'),
-  DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 YEAR), '%e/%c/%Y'),
-  'A'
-);
+VALUES (94000007, 400000007, 101, 1,
+        DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 YEAR), '%e/%c/%Y'),
+        DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 YEAR), '%e/%c/%Y'),
+        'A');
 
--- Prescripción antigua (hace 5 años)
 INSERT INTO prescribes (physicianid, patientid, medicationid, `date`, appointmentid, dose)
-VALUES (
-  1, 400000007, 1,
-  DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 YEAR), '%e/%c/%Y'),
-  94000007, 1
-);
+VALUES (1, 400000007, 1,
+        DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 YEAR), '%e/%c/%Y'),
+        94000007, 1);
 
--- Estancia antigua (hace 5 años)
 INSERT INTO stay (stayid, patientid, roomid, start_time, end_time)
-VALUES (
-  94000007, 400000007, 101,
-  DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 YEAR), '%e/%c/%Y'),
-  DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 YEAR), '%e/%c/%Y')
-);
+VALUES (94000007, 400000007, 101,
+        DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 YEAR), '%e/%c/%Y'),
+        DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 YEAR), '%e/%c/%Y'));
 
--- Procedimiento antiguo (hace 5 años)
 INSERT INTO undergoes (patientid, procedureid, stayid, `date`, physicianid, assistingnurseid)
-VALUES (
-  400000007, 1, 94000007,
-  DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 YEAR), '%e/%c/%Y'),
-  1, 101
-);
+VALUES (400000007, 1, 94000007,
+        DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 YEAR), '%e/%c/%Y'),
+        1, 101);
 
 DELETE FROM patient WHERE ssn = 400000007;
--- Esperado: OK 
