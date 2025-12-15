@@ -125,7 +125,7 @@ WHERE m.code NOT IN (
     JOIN affiliated_with aw ON ph.employeeid = aw.physicianid
     JOIN department d ON aw.departmentid = d.departmentid
     WHERE d.name = 'General Medicine'
-      AND STR_TO_DATE(pr.`date`, '%d/%m/%Y') >= DATE_SUB(CURDATE(), INTERVAL 2 YEAR)
+      AND DATEDIFF(CURDATE(), STR_TO_DATE(pr.date, '%d/%m/%Y')) <= 730
 )
 AND (m.description IS NULL OR m.description NOT LIKE '%Possible discontinuation%');
 
